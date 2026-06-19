@@ -1,4 +1,3 @@
-<h1 style="color:blue;font-size:60px">JEŚLI TO WIDZISZ = DZIAŁA</h1><!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -15,18 +14,16 @@ body {
 }
 
 /* 💖 SERDUSZKA */
+.heart {
+    position: absolute;
+    font-size: 18px;
+    animation: floatUp 6s linear forwards;
+}
+
 @keyframes floatUp {
-    0% {
-        transform: translateY(0);
-        opacity: 0;
-    }
-    10% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-120vh);
-        opacity: 0;
-    }
+    0% { transform: translateY(100vh); opacity: 0; }
+    10% { opacity: 1; }
+    100% { transform: translateY(-120vh); opacity: 0; }
 }
 
 /* START */
@@ -47,7 +44,6 @@ body {
     animation: bounce 1.2s infinite alternate;
 }
 
-/* włosy */
 .hair {
     position: absolute;
     width: 110px;
@@ -58,7 +54,6 @@ body {
     left: 25px;
 }
 
-/* twarz */
 .face {
     position: absolute;
     width: 70px;
@@ -69,7 +64,6 @@ body {
     left: 45px;
 }
 
-/* oczy (niebieskie) */
 .eye {
     position: absolute;
     width: 10px;
@@ -82,7 +76,6 @@ body {
 .eye.left { left: 60px; }
 .eye.right { left: 90px; }
 
-/* ciało */
 .body {
     position: absolute;
     width: 90px;
@@ -93,7 +86,6 @@ body {
     border-radius: 10px;
 }
 
-/* spodnie */
 .legs {
     position: absolute;
     width: 90px;
@@ -103,7 +95,6 @@ body {
     left: 35px;
 }
 
-/* ręka machająca */
 .arm {
     position: absolute;
     width: 18px;
@@ -171,12 +162,11 @@ input {
 <script>
 function createHeart(){
     const heart = document.createElement("div");
+    heart.className = "heart";
     heart.innerHTML = "💖";
-    heart.style.position = "absolute";
     heart.style.left = Math.random() * 100 + "vw";
     heart.style.top = "100vh";
-    heart.style.fontSize = (14 + Math.random()*20) + "px";
-    heart.style.animation = "floatUp 6s linear forwards";
+    heart.style.animationDuration = (3 + Math.random() * 3) + "s";
 
     document.body.appendChild(heart);
 
@@ -228,10 +218,10 @@ function checkMood(){
     let result = document.getElementById("result");
 
     if(mood >= 9){
-        result.innerHTML = "💖 Cieszę się Jess! Jesteś ważna i zasługujesz na wszystko co najlepsze ❤️";
+        result.innerHTML = "💖 Cieszę się Jess! Jesteś ważna i zasługujesz na dobre rzeczy ❤️";
     }
     else if(mood >= 7){
-        result.innerHTML = "💖 Super! Co mogłoby dziś jeszcze poprawić Twój dzień?";
+        result.innerHTML = "💖 Super! Co mogłoby dziś poprawić Twój dzień?";
     }
     else if(mood >= 1){
         result.innerHTML = "🌸 Jestem przy Tobie Jess. Nie jesteś sama ❤️";
