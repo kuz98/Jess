@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jess 💖 v6</title>
+<title>Jess 💖</title>
 
 <style>
 body{
@@ -11,29 +11,15 @@ margin:0;
 font-family:Arial;
 background:linear-gradient(135deg,#ffd6eb,#ffc2e2);
 text-align:center;
-color:#b3005f;
 }
 
-/* 💖 SERCA */
-.heart{
-position:absolute;
-font-size:18px;
-animation:floatUp 6s linear forwards;
-}
-@keyframes floatUp{
-0%{transform:translateY(100vh);opacity:0;}
-10%{opacity:1;}
-100%{transform:translateY(-120vh);opacity:0;}
-}
-
-/* LAYOUT */
 #start,#app{
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
 min-height:100vh;
-padding:15px;
+padding:20px;
 }
 
 /* GIRL */
@@ -42,12 +28,10 @@ width:120px;
 height:140px;
 position:relative;
 margin-bottom:10px;
-transition:0.3s;
 }
 
 .face{
-width:60px;
-height:60px;
+width:60px;height:60px;
 background:#f5d7c6;
 border-radius:50%;
 margin:auto;
@@ -55,38 +39,27 @@ position:relative;
 }
 
 .eye{
-width:8px;
-height:8px;
+width:8px;height:8px;
 background:#3aa0ff;
 border-radius:50%;
 position:absolute;
 top:25px;
-animation:blink 4s infinite;
 }
 
 .eye.left{left:40px;}
 .eye.right{right:40px;}
 
-@keyframes blink{
-0%,95%,100%{height:8px;}
-97%{height:1px;}
-}
-
 .mouth{
-width:18px;
-height:8px;
+width:18px;height:8px;
 background:#b3005f;
 border-radius:10px;
 margin:8px auto;
-transition:0.3s;
 }
 
-/* EMOCJE */
 .happy{transform:scale(1.1);}
 .medium{transform:scale(1);}
 .sad{transform:scale(0.95);filter:brightness(0.7);}
 
-/* UI */
 button{
 padding:10px;
 border:none;
@@ -97,38 +70,24 @@ margin:5px;
 cursor:pointer;
 }
 
-input,textarea{
+textarea,input{
 padding:10px;
 border-radius:10px;
 border:2px solid pink;
 }
 
-/* BOX */
-.box{
+#chat{
+margin-top:10px;
+width:90%;
+max-width:350px;
 background:rgba(255,255,255,0.4);
-margin:10px;
 padding:10px;
 border-radius:10px;
-width:90%;
-max-width:400px;
 }
 </style>
 </head>
 
 <body>
-
-<!-- 💖 SERCA -->
-<script>
-setInterval(()=>{
-const h=document.createElement("div");
-h.className="heart";
-h.innerHTML="💖";
-h.style.left=Math.random()*100+"vw";
-h.style.animationDuration=(3+Math.random()*4)+"s";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),7000);
-},400);
-</script>
 
 <!-- START -->
 <div id="start">
@@ -152,59 +111,54 @@ setTimeout(()=>h.remove(),7000);
 
 <div id="mainText"></div>
 
+<div id="chat"></div>
+
 <div id="options"></div>
-
-<div class="box">
-<h3>📅 Kalendarz emocji</h3>
-<div id="calendar"></div>
-</div>
-
-<button onclick="toggleMusic()">🎵 muzyka</button>
-<audio id="music"></audio>
 
 </div>
 
 <script>
 
-let mood=0;
-let history=JSON.parse(localStorage.getItem("history")||"[]");
-
 let step=0;
-let musicOn=false;
 
 function start(){
-mood=parseInt(document.getElementById("mood").value);
+let mood=parseInt(document.getElementById("mood").value);
 
 document.getElementById("start").style.display="none";
 document.getElementById("app").style.display="flex";
 
-saveMood();
-renderCalendar();
-setEmotion();
-setMusic();
+step=0;
+document.getElementById("chat").innerHTML="";
+document.getElementById("options").innerHTML="";
 
+setEmotion(mood);
+
+/* 8–10 */
 if(mood>=8){
-show("💖 Jess jest dziś szczęśliwa!");
+show("💖 Super Jess! Cieszę się że czujesz się dobrze 💖");
 }
 
+/* 4–7 = MEDIUM CHAT */
 else if(mood>=4){
-show("💬 Jess, pogadajmy...");
-chatStart();
+show("💬 Widzę że jest Ci trochę ciężej... jestem tu z Tobą.");
+
+mediumChat();
 }
 
+/* 1–3 */
 else{
-show("💔 Jestem przy Tobie...");
-showYesNo();
+show("💔 Bardzo mi przykro skarbie...");
+showOptions();
 }
 }
 
 /* EMOTION */
-function setEmotion(){
+function setEmotion(m){
 let g=document.getElementById("girl");
 g.classList.remove("happy","medium","sad");
 
-if(mood>=8) g.classList.add("happy");
-else if(mood>=4) g.classList.add("medium");
+if(m>=8) g.classList.add("happy");
+else if(m>=4) g.classList.add("medium");
 else g.classList.add("sad");
 }
 
@@ -213,40 +167,40 @@ function show(t){
 document.getElementById("mainText").innerHTML=t;
 }
 
-/* CHAT (MEDIUM) */
-function chatStart(){
+/* 💬 MEDIUM CHAT (symulacja AI rozmowy) */
+function mediumChat(){
 document.getElementById("options").innerHTML=`
-<textarea id="txt"></textarea><br>
-<button onclick="reply()">Wyślij</button>
+<textarea id="txt" placeholder="Napisz co czujesz..."></textarea><br>
+<button onclick="replyMedium()">Wyślij</button>
 `;
 }
 
-function reply(){
+function replyMedium(){
 let t=document.getElementById("txt").value;
-show("💖 Rozumiem Jess...");
 
-document.getElementById("options").innerHTML=`
-<button onclick="yes()">Tak</button>
-<button onclick="no()">Nie</button>
-`;
+document.getElementById("chat").innerHTML=
+"<b>Jess:</b> "+t+"<br><br>"+
+"<b>💖 Ja:</b> Rozumiem Cię Jess. To co czujesz ma sens. Chcesz, żebym pomogła Ci coś z tym zrobić czy wolisz po prostu chwilę wsparcia?";
 }
 
-/* YES NO FLOW */
-function showYesNo(){
+/* 1–3 OPTIONS */
+function showOptions(){
 document.getElementById("options").innerHTML=`
+<p>Czy mogę Ci jakoś pomóc?</p>
 <button onclick="yes()">Tak</button>
 <button onclick="no()">Nie</button>
 `;
 }
 
 function yes(){
-show("💖 Super, robimy coś miłego!");
+document.getElementById("chat").innerHTML="💖 Super, jestem z Tobą Jess.";
 document.getElementById("options").innerHTML="";
 }
 
 function no(){
+
 let options=[
-"Może obiad?",
+"Może zabiorę Cię na obiad?",
 "Masaż?",
 "Film?",
 "Gra?",
@@ -256,77 +210,22 @@ let options=[
 "Sprzątanie?"
 ];
 
-if(step<options.length){
-showOption(options[step]);
+document.getElementById("options").innerHTML=`
+<p>${options[step]}</p>
+<button onclick="nextYes()">Tak</button>
+<button onclick="nextNo()">Nie</button>
+`;
+
 step++;
 }
-else{
-show("💖 Powiedz mi co chcesz robić");
-document.getElementById("options").innerHTML=`
-<textarea id="custom"></textarea><br>
-<button onclick="custom()">Wyślij</button>
-`;
-}
-}
 
-function showOption(t){
-document.getElementById("options").innerHTML=`
-<p>${t}</p>
-<button onclick="yes()">Tak</button>
-<button onclick="no()">Nie</button>
-`;
-}
-
-function custom(){
-let t=document.getElementById("custom").value;
-show("💖 Rozumiem: "+t);
+function nextYes(){
+document.getElementById("chat").innerHTML="💖 Robimy to!";
 document.getElementById("options").innerHTML="";
 }
 
-/* MEMORY */
-function saveMood(){
-let day=new Date().toLocaleDateString();
-history.push({day,mood});
-localStorage.setItem("history",JSON.stringify(history));
-}
-
-/* CALENDAR */
-function renderCalendar(){
-let c=document.getElementById("calendar");
-c.innerHTML="";
-
-history.slice(-7).forEach(h=>{
-c.innerHTML+=`<div onclick="alert('Nastrój: ${h.mood}/10')">
-📅 ${h.day} → ${h.mood}/10
-</div>`;
-});
-}
-
-/* MUSIC */
-function setMusic(){
-let m=document.getElementById("music");
-
-if(mood>=8){
-m.src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d7c3b6b6f2.mp3";
-}
-else if(mood>=4){
-m.src="https://cdn.pixabay.com/download/audio/2022/01/20/audio_c8c8c8.mp3";
-}
-else{
-m.src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_8b8b8b.mp3";
-}
-}
-
-function toggleMusic(){
-let m=document.getElementById("music");
-
-if(!musicOn){
-m.play();
-musicOn=true;
-}else{
-m.pause();
-musicOn=false;
-}
+function nextNo(){
+no();
 }
 
 </script>
