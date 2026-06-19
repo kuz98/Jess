@@ -6,121 +6,135 @@
 <title>Dla Jess 💖</title>
 
 <style>
-body{
-    background: linear-gradient(135deg,#ffd6eb,#ffc2e2);
+body {
+    margin: 0;
     font-family: Arial, sans-serif;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    margin:0;
+    background: linear-gradient(135deg,#ffd6eb,#ffc2e2);
+    overflow: hidden;
 }
 
-.card{
-    background:white;
-    padding:30px;
-    border-radius:25px;
-    width:350px;
-    text-align:center;
-    box-shadow:0 0 20px rgba(0,0,0,0.15);
+/* KWIATKI W TLE */
+.flower {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: pink;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: float 6s infinite ease-in-out;
 }
 
-h1{
-    color:#ff5fa2;
+@keyframes float {
+    0% {transform: translateY(0);}
+    50% {transform: translateY(-20px);}
+    100% {transform: translateY(0);}
 }
 
-input{
-    width:80px;
-    padding:10px;
-    font-size:18px;
-    text-align:center;
-    border:2px solid pink;
-    border-radius:10px;
+/* EKRAN STARTOWY */
+#start {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
-button{
-    margin-top:15px;
-    padding:10px 20px;
-    border:none;
-    border-radius:12px;
-    background:#ff82bc;
-    color:white;
-    font-size:16px;
-    cursor:pointer;
+/* PIXEL LUDZIK */
+.pixel {
+    width: 80px;
+    height: 80px;
+    image-rendering: pixelated;
+    margin-bottom: 20px;
+    animation: wave 1s infinite alternate;
 }
 
-button:hover{
-    opacity:0.9;
+@keyframes wave {
+    from { transform: rotate(-10deg); }
+    to { transform: rotate(10deg); }
 }
 
-#result{
-    margin-top:20px;
-    font-size:18px;
+h1 {
+    color: #ff4f9a;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    background: #ff82bc;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* GRA */
+#game {
+    display: none;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+input {
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid pink;
+    width: 80px;
+    text-align: center;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-    <h1>💖 Cześć Jess 💖</h1>
+<!-- kwiatki -->
+<div class="flower" style="top:10%;left:20%"></div>
+<div class="flower" style="top:30%;left:70%"></div>
+<div class="flower" style="top:60%;left:40%"></div>
 
-    <p>Jak się dziś czujesz w skali od 1 do 10?</p>
+<!-- START -->
+<div id="start">
+    <div class="pixel">🧍‍♀️</div>
+    <h1>Cześć Jess 💖</h1>
+    <button onclick="startGame()">Zaczynamy</button>
+</div>
 
-    <input type="number" id="mood" min="1" max="10">
-
-    <br>
-
+<!-- GRA -->
+<div id="game">
+    <h2>Jak się dziś czujesz (1-10)? 💖</h2>
+    <input id="mood" type="number" min="1" max="10">
+    <br><br>
     <button onclick="checkMood()">Wyślij</button>
 
-    <div id="result"></div>
+    <p id="result"></p>
 </div>
 
 <script>
 
-function checkMood(){
+function startGame(){
+    document.getElementById("start").style.display = "none";
+    document.getElementById("game").style.display = "flex";
+}
 
+function checkMood(){
     let mood = parseInt(document.getElementById("mood").value);
     let result = document.getElementById("result");
 
     if(mood >= 9){
-
-        result.innerHTML =
-        "💖 Cieszę się, że tak się czujesz!<br><br>Pamiętaj, że bardzo Cię kocham i cieszę się, że czujesz się szczęśliwa ❤️";
-
+        result.innerHTML = "💖 Cieszę się, że tak się czujesz! Kocham Cię i chcę żebyś zawsze była szczęśliwa ❤️";
     }
-
     else if(mood >= 7){
-
-        result.innerHTML =
-        `
-        <p>💖 Bardzo się cieszę!</p>
-        <p>Czy jest coś, co może uczynić ten dzień jeszcze lepszym?</p>
-
-        <button onclick="tak()">Tak</button>
-        <button onclick="nie()">Nie</button>
-        `;
+        result.innerHTML = "💖 Super! Czy jest coś co może uczynić ten dzień jeszcze lepszym?";
     }
-
     else if(mood >= 1){
-
-        result.innerHTML =
-        "🌸 Dziękuję, że mi powiedziałaś. Chcę wiedzieć, jak się czujesz i jestem przy Tobie ❤️";
+        result.innerHTML = "🌸 Jestem przy Tobie Jess. Wszystko będzie dobrze ❤️";
     }
-
     else{
-        result.innerHTML = "Wpisz liczbę od 1 do 10.";
+        result.innerHTML = "Wpisz liczbę 1–10";
     }
-}
-
-function tak(){
-    document.getElementById("result").innerHTML =
-    "✨ Opowiedz mi o tym! Chętnie się dowiem.";
-}
-
-function nie(){
-    document.getElementById("result").innerHTML =
-    "💖 W takim razie życzę Ci cudownego dnia!";
 }
 
 </script>
