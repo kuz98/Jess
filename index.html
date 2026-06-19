@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jess 💖 Fix</title>
+<title>Jess 💖 v6</title>
 
 <style>
 body{
 margin:0;
 font-family:Arial;
 background:linear-gradient(135deg,#ffd6eb,#ffc2e2);
-overflow-x:hidden;
 text-align:center;
+color:#b3005f;
 }
 
 /* 💖 SERCA */
@@ -26,14 +26,14 @@ animation:floatUp 6s linear forwards;
 100%{transform:translateY(-120vh);opacity:0;}
 }
 
-/* START */
+/* LAYOUT */
 #start,#app{
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
 min-height:100vh;
-padding:20px;
+padding:15px;
 }
 
 /* GIRL */
@@ -46,7 +46,8 @@ transition:0.3s;
 }
 
 .face{
-width:60px;height:60px;
+width:60px;
+height:60px;
 background:#f5d7c6;
 border-radius:50%;
 margin:auto;
@@ -54,18 +55,26 @@ position:relative;
 }
 
 .eye{
-width:8px;height:8px;
+width:8px;
+height:8px;
 background:#3aa0ff;
 border-radius:50%;
 position:absolute;
 top:25px;
+animation:blink 4s infinite;
 }
 
 .eye.left{left:40px;}
 .eye.right{right:40px;}
 
+@keyframes blink{
+0%,95%,100%{height:8px;}
+97%{height:1px;}
+}
+
 .mouth{
-width:20px;height:8px;
+width:18px;
+height:8px;
 background:#b3005f;
 border-radius:10px;
 margin:8px auto;
@@ -77,6 +86,7 @@ transition:0.3s;
 .medium{transform:scale(1);}
 .sad{transform:scale(0.95);filter:brightness(0.7);}
 
+/* UI */
 button{
 padding:10px;
 border:none;
@@ -93,16 +103,14 @@ border-radius:10px;
 border:2px solid pink;
 }
 
-/* CHAT */
-#chat{
-width:90%;
-max-width:350px;
-height:150px;
-overflow:auto;
+/* BOX */
+.box{
 background:rgba(255,255,255,0.4);
-margin:10px auto;
-border-radius:10px;
+margin:10px;
 padding:10px;
+border-radius:10px;
+width:90%;
+max-width:400px;
 }
 </style>
 </head>
@@ -144,50 +152,60 @@ setTimeout(()=>h.remove(),7000);
 
 <div id="mainText"></div>
 
-<div id="chat"></div>
 <div id="options"></div>
+
+<div class="box">
+<h3>📅 Kalendarz emocji</h3>
+<div id="calendar"></div>
+</div>
+
+<button onclick="toggleMusic()">🎵 muzyka</button>
+<audio id="music"></audio>
 
 </div>
 
 <script>
 
+let mood=0;
+let history=JSON.parse(localStorage.getItem("history")||"[]");
+
 let step=0;
+let musicOn=false;
 
 function start(){
-let mood=parseInt(document.getElementById("mood").value);
+mood=parseInt(document.getElementById("mood").value);
 
 document.getElementById("start").style.display="none";
 document.getElementById("app").style.display="flex";
 
-/* RESET */
-step=0;
-document.getElementById("chat").innerHTML="";
-document.getElementById("options").innerHTML="";
+saveMood();
+renderCalendar();
+setEmotion();
+setMusic();
 
-/* EMOTION + FLOW */
 if(mood>=8){
-setGirl("happy");
-show("💖 Super Jess! Cieszę się że jest dobrze!");
+show("💖 Jess jest dziś szczęśliwa!");
 }
 
 else if(mood>=4){
-setGirl("medium");
-show("💬 Jest średnio... chcę z Tobą porozmawiać.");
-startChat();
+show("💬 Jess, pogadajmy...");
+chatStart();
 }
 
 else{
-setGirl("sad");
-show("💔 Bardzo mi przykro skarbie...");
+show("💔 Jestem przy Tobie...");
 showYesNo();
 }
 }
 
-/* GIRL EMOTION */
-function setGirl(type){
+/* EMOTION */
+function setEmotion(){
 let g=document.getElementById("girl");
 g.classList.remove("happy","medium","sad");
-g.classList.add(type);
+
+if(mood>=8) g.classList.add("happy");
+else if(mood>=4) g.classList.add("medium");
+else g.classList.add("sad");
 }
 
 /* TEXT */
@@ -195,10 +213,9 @@ function show(t){
 document.getElementById("mainText").innerHTML=t;
 }
 
-/* CHAT MODE */
-function startChat(){
+/* CHAT (MEDIUM) */
+function chatStart(){
 document.getElementById("options").innerHTML=`
-<p>Co się dzieje Jess?</p>
 <textarea id="txt"></textarea><br>
 <button onclick="reply()">Wyślij</button>
 `;
@@ -206,17 +223,15 @@ document.getElementById("options").innerHTML=`
 
 function reply(){
 let t=document.getElementById("txt").value;
+show("💖 Rozumiem Jess...");
 
-document.getElementById("chat").innerHTML+=
-"<div>Jess: "+t+"</div>";
-
-document.getElementById("chat").innerHTML+=
-"<div>💖 Rozumiem... co mogę dla Ciebie zrobić?</div>";
-
-showYesNo();
+document.getElementById("options").innerHTML=`
+<button onclick="yes()">Tak</button>
+<button onclick="no()">Nie</button>
+`;
 }
 
-/* YES NO */
+/* YES NO FLOW */
 function showYesNo(){
 document.getElementById("options").innerHTML=`
 <button onclick="yes()">Tak</button>
@@ -225,17 +240,16 @@ document.getElementById("options").innerHTML=`
 }
 
 function yes(){
-show("💖 Dobrze Jess, działamy!");
+show("💖 Super, robimy coś miłego!");
 document.getElementById("options").innerHTML="";
 }
 
 function no(){
-
 let options=[
-"Może zabiorę Cię na obiad?",
-"Może masaż?",
-"Może film?",
-"Może gra?",
+"Może obiad?",
+"Masaż?",
+"Film?",
+"Gra?",
 "Spacer?",
 "Rozmowa?",
 "Zakupy?",
@@ -247,7 +261,7 @@ showOption(options[step]);
 step++;
 }
 else{
-show("💖 Powiedz mi co chcesz robić Jess");
+show("💖 Powiedz mi co chcesz robić");
 document.getElementById("options").innerHTML=`
 <textarea id="custom"></textarea><br>
 <button onclick="custom()">Wyślij</button>
@@ -255,9 +269,9 @@ document.getElementById("options").innerHTML=`
 }
 }
 
-function showOption(text){
+function showOption(t){
 document.getElementById("options").innerHTML=`
-<p>${text}</p>
+<p>${t}</p>
 <button onclick="yes()">Tak</button>
 <button onclick="no()">Nie</button>
 `;
@@ -267,6 +281,52 @@ function custom(){
 let t=document.getElementById("custom").value;
 show("💖 Rozumiem: "+t);
 document.getElementById("options").innerHTML="";
+}
+
+/* MEMORY */
+function saveMood(){
+let day=new Date().toLocaleDateString();
+history.push({day,mood});
+localStorage.setItem("history",JSON.stringify(history));
+}
+
+/* CALENDAR */
+function renderCalendar(){
+let c=document.getElementById("calendar");
+c.innerHTML="";
+
+history.slice(-7).forEach(h=>{
+c.innerHTML+=`<div onclick="alert('Nastrój: ${h.mood}/10')">
+📅 ${h.day} → ${h.mood}/10
+</div>`;
+});
+}
+
+/* MUSIC */
+function setMusic(){
+let m=document.getElementById("music");
+
+if(mood>=8){
+m.src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_d7c3b6b6f2.mp3";
+}
+else if(mood>=4){
+m.src="https://cdn.pixabay.com/download/audio/2022/01/20/audio_c8c8c8.mp3";
+}
+else{
+m.src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_8b8b8b.mp3";
+}
+}
+
+function toggleMusic(){
+let m=document.getElementById("music");
+
+if(!musicOn){
+m.play();
+musicOn=true;
+}else{
+m.pause();
+musicOn=false;
+}
 }
 
 </script>
