@@ -3,125 +3,106 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jess 💖 Emotion System</title>
+<title>Jess 💖 Fix</title>
 
 <style>
 body{
-    margin:0;
-    font-family:Arial;
-    background:linear-gradient(135deg,#ffd6eb,#ffc2e2);
-    overflow-x:hidden;
-    color:#b3005f;
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#ffd6eb,#ffc2e2);
+overflow-x:hidden;
+text-align:center;
 }
 
 /* 💖 SERCA */
 .heart{
-    position:absolute;
-    font-size:18px;
-    animation:floatUp 6s linear forwards;
+position:absolute;
+font-size:18px;
+animation:floatUp 6s linear forwards;
 }
 @keyframes floatUp{
-    0%{transform:translateY(100vh);opacity:0;}
-    10%{opacity:1;}
-    100%{transform:translateY(-120vh);opacity:0;}
+0%{transform:translateY(100vh);opacity:0;}
+10%{opacity:1;}
+100%{transform:translateY(-120vh);opacity:0;}
 }
 
-/* LAYOUT */
+/* START */
 #start,#app{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    min-height:100vh;
-    text-align:center;
-    padding:15px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+min-height:100vh;
+padding:20px;
 }
 
-/* PIXEL GIRL */
+/* GIRL */
 .girl{
-    width:120px;
-    height:140px;
-    position:relative;
-    margin-bottom:10px;
-    transition:0.3s;
+width:120px;
+height:140px;
+position:relative;
+margin-bottom:10px;
+transition:0.3s;
 }
 
 .face{
-    width:60px;height:60px;
-    background:#f5d7c6;
-    border-radius:50%;
-    margin:auto;
-    position:relative;
+width:60px;height:60px;
+background:#f5d7c6;
+border-radius:50%;
+margin:auto;
+position:relative;
 }
 
 .eye{
-    width:8px;height:8px;
-    background:#3aa0ff;
-    border-radius:50%;
-    position:absolute;
-    top:25px;
+width:8px;height:8px;
+background:#3aa0ff;
+border-radius:50%;
+position:absolute;
+top:25px;
 }
 
 .eye.left{left:40px;}
 .eye.right{right:40px;}
 
 .mouth{
-    width:20px;height:8px;
-    border-radius:10px;
-    background:#b3005f;
-    margin:8px auto;
+width:20px;height:8px;
+background:#b3005f;
+border-radius:10px;
+margin:8px auto;
+transition:0.3s;
 }
 
 /* EMOCJE */
 .happy{transform:scale(1.1);}
-.sad{transform:scale(0.95);filter:brightness(0.8);}
-.medium{transform:scale(1);filter:saturate(0.7);}
+.medium{transform:scale(1);}
+.sad{transform:scale(0.95);filter:brightness(0.7);}
 
-/* UI */
 button{
-    background:#ff82bc;
-    border:none;
-    padding:10px;
-    border-radius:10px;
-    color:white;
-    margin:5px;
-    cursor:pointer;
+padding:10px;
+border:none;
+border-radius:10px;
+background:#ff82bc;
+color:white;
+margin:5px;
+cursor:pointer;
 }
 
 input,textarea{
-    padding:8px;
-    border-radius:8px;
-    border:2px solid pink;
+padding:10px;
+border-radius:10px;
+border:2px solid pink;
 }
 
 /* CHAT */
-.chat{
-    width:90%;
-    max-width:350px;
-    height:120px;
-    overflow:auto;
-    background:rgba(255,255,255,0.4);
-    border-radius:10px;
-    padding:8px;
-    margin:10px;
-}
-
-/* HISTORY + CALENDAR */
-.box{
-    width:90%;
-    max-width:400px;
-    background:rgba(255,255,255,0.4);
-    padding:10px;
-    border-radius:10px;
-    margin:10px;
-}
-
-/* GRAPH */
-.bar{
-    height:10px;
-    background:#ff4f9a;
-    margin:3px 0;
-    border-radius:5px;
+#chat{
+width:90%;
+max-width:350px;
+height:150px;
+overflow:auto;
+background:rgba(255,255,255,0.4);
+margin:10px auto;
+border-radius:10px;
+padding:10px;
 }
 </style>
 </head>
@@ -131,157 +112,161 @@ input,textarea{
 <!-- 💖 SERCA -->
 <script>
 setInterval(()=>{
-    const h=document.createElement("div");
-    h.className="heart";
-    h.innerHTML="💖";
-    h.style.left=Math.random()*100+"vw";
-    h.style.animationDuration=(3+Math.random()*4)+"s";
-    document.body.appendChild(h);
-    setTimeout(()=>h.remove(),7000);
+const h=document.createElement("div");
+h.className="heart";
+h.innerHTML="💖";
+h.style.left=Math.random()*100+"vw";
+h.style.animationDuration=(3+Math.random()*4)+"s";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),7000);
 },400);
 </script>
 
 <!-- START -->
 <div id="start">
-    <h1>Hej Jess 💖</h1>
-    <p>Jak się dziś czujesz (1–10)?</p>
-    <input id="mood" type="number" min="1" max="10">
-    <button onclick="start()">Start</button>
+<h1>Hej Jess 💖</h1>
+<p>Jak się dziś czujesz (1–10)?</p>
+<input id="mood" type="number" min="1" max="10">
+<br><br>
+<button onclick="start()">Dalej</button>
 </div>
 
 <!-- APP -->
 <div id="app" style="display:none;">
 
-    <!-- GIRL -->
-    <div id="girl" class="girl">
-        <div class="face"></div>
-        <div class="eye left"></div>
-        <div class="eye right"></div>
-        <div class="mouth"></div>
-    </div>
+<div id="girl" class="girl">
+<div class="face">
+<div class="eye left"></div>
+<div class="eye right"></div>
+</div>
+<div class="mouth"></div>
+</div>
 
-    <div id="mainText"></div>
+<div id="mainText"></div>
 
-    <!-- CHAT -->
-    <div class="chat" id="chat"></div>
-    <div id="inputArea"></div>
-
-    <!-- HISTORY -->
-    <div class="box">
-        <h3>📅 Historia</h3>
-        <div id="history"></div>
-    </div>
-
-    <!-- GRAPH -->
-    <div class="box">
-        <h3>📊 Wykres nastroju</h3>
-        <div id="graph"></div>
-    </div>
+<div id="chat"></div>
+<div id="options"></div>
 
 </div>
 
 <script>
 
-let mood=0;
-let data=JSON.parse(localStorage.getItem("moods")||"[]");
+let step=0;
 
 function start(){
-    mood=parseInt(document.getElementById("mood").value);
+let mood=parseInt(document.getElementById("mood").value);
 
-    document.getElementById("start").style.display="none";
-    document.getElementById("app").style.display="flex";
+document.getElementById("start").style.display="none";
+document.getElementById("app").style.display="flex";
 
-    saveMood();
-    renderAll();
+/* RESET */
+step=0;
+document.getElementById("chat").innerHTML="";
+document.getElementById("options").innerHTML="";
 
-    setEmotion();
-
-    if(mood>=8){
-        show("💖 Super Jess!");
-    }
-    else if(mood>=4){
-        show("💬 Chcę z Tobą pogadać...");
-        chatMode();
-    }
-    else{
-        show("💔 Jestem przy Tobie...");
-        showYesNo();
-    }
+/* EMOTION + FLOW */
+if(mood>=8){
+setGirl("happy");
+show("💖 Super Jess! Cieszę się że jest dobrze!");
 }
 
-/* EMOTION */
-function setEmotion(){
-    let g=document.getElementById("girl");
-    g.classList.remove("happy","sad","medium");
-
-    if(mood>=8) g.classList.add("happy");
-    else if(mood>=4) g.classList.add("medium");
-    else g.classList.add("sad");
+else if(mood>=4){
+setGirl("medium");
+show("💬 Jest średnio... chcę z Tobą porozmawiać.");
+startChat();
 }
 
-/* CHAT */
-function chatMode(){
-    document.getElementById("inputArea").innerHTML=`
-        <textarea id="txt"></textarea><br>
-        <button onclick="reply()">Wyślij</button>
-    `;
+else{
+setGirl("sad");
+show("💔 Bardzo mi przykro skarbie...");
+showYesNo();
+}
+}
+
+/* GIRL EMOTION */
+function setGirl(type){
+let g=document.getElementById("girl");
+g.classList.remove("happy","medium","sad");
+g.classList.add(type);
+}
+
+/* TEXT */
+function show(t){
+document.getElementById("mainText").innerHTML=t;
+}
+
+/* CHAT MODE */
+function startChat(){
+document.getElementById("options").innerHTML=`
+<p>Co się dzieje Jess?</p>
+<textarea id="txt"></textarea><br>
+<button onclick="reply()">Wyślij</button>
+`;
 }
 
 function reply(){
-    let t=document.getElementById("txt").value;
-    addChat("Jess: "+t);
-    addChat("💖 Rozumiem... chcesz coś zrobić żeby poczuć się lepiej?");
-    document.getElementById("inputArea").innerHTML=`
-        <button onclick="yes()">Tak</button>
-        <button onclick="no()">Nie</button>
-    `;
+let t=document.getElementById("txt").value;
+
+document.getElementById("chat").innerHTML+=
+"<div>Jess: "+t+"</div>";
+
+document.getElementById("chat").innerHTML+=
+"<div>💖 Rozumiem... co mogę dla Ciebie zrobić?</div>";
+
+showYesNo();
 }
 
-function addChat(t){
-    document.getElementById("chat").innerHTML+="<div>"+t+"</div>";
-}
-
-/* YES/NO */
+/* YES NO */
 function showYesNo(){
-    document.getElementById("inputArea").innerHTML=`
-        <button onclick="yes()">Tak</button>
-        <button onclick="no()">Nie</button>
-    `;
+document.getElementById("options").innerHTML=`
+<button onclick="yes()">Tak</button>
+<button onclick="no()">Nie</button>
+`;
 }
 
 function yes(){
-    show("💖 Robimy coś miłego!");
+show("💖 Dobrze Jess, działamy!");
+document.getElementById("options").innerHTML="";
 }
 
 function no(){
-    show("💔 Jestem tu jeśli zmienisz zdanie");
+
+let options=[
+"Może zabiorę Cię na obiad?",
+"Może masaż?",
+"Może film?",
+"Może gra?",
+"Spacer?",
+"Rozmowa?",
+"Zakupy?",
+"Sprzątanie?"
+];
+
+if(step<options.length){
+showOption(options[step]);
+step++;
+}
+else{
+show("💖 Powiedz mi co chcesz robić Jess");
+document.getElementById("options").innerHTML=`
+<textarea id="custom"></textarea><br>
+<button onclick="custom()">Wyślij</button>
+`;
+}
 }
 
-/* SAVE */
-function saveMood(){
-    let d=new Date().toLocaleDateString();
-    data.push({d,mood});
-    localStorage.setItem("moods",JSON.stringify(data));
+function showOption(text){
+document.getElementById("options").innerHTML=`
+<p>${text}</p>
+<button onclick="yes()">Tak</button>
+<button onclick="no()">Nie</button>
+`;
 }
 
-/* HISTORY */
-function renderAll(){
-    let h=document.getElementById("history");
-    h.innerHTML="";
-    data.slice(-7).forEach(x=>{
-        h.innerHTML+=`<div>${x.d} → ${x.mood}/10</div>`;
-    });
-
-    let g=document.getElementById("graph");
-    g.innerHTML="";
-    data.slice(-7).forEach(x=>{
-        g.innerHTML+=`<div class="bar" style="width:${x.mood*10}%"></div>`;
-    });
-}
-
-/* SHOW TEXT */
-function show(t){
-    document.getElementById("mainText").innerHTML=t;
+function custom(){
+let t=document.getElementById("custom").value;
+show("💖 Rozumiem: "+t);
+document.getElementById("options").innerHTML="";
 }
 
 </script>
