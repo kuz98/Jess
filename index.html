@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dla Jess 💖</title>
+
+<style>
+body{
+    background: linear-gradient(135deg,#ffd6eb,#ffc2e2);
+    font-family: Arial, sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    margin:0;
+}
+
+.card{
+    background:white;
+    padding:30px;
+    border-radius:25px;
+    width:350px;
+    text-align:center;
+    box-shadow:0 0 20px rgba(0,0,0,0.15);
+}
+
+h1{
+    color:#ff5fa2;
+}
+
+input{
+    width:80px;
+    padding:10px;
+    font-size:18px;
+    text-align:center;
+    border:2px solid pink;
+    border-radius:10px;
+}
+
+button{
+    margin-top:15px;
+    padding:10px 20px;
+    border:none;
+    border-radius:12px;
+    background:#ff82bc;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+#result{
+    margin-top:20px;
+    font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>💖 Cześć Jess 💖</h1>
+
+    <p>Jak się dziś czujesz w skali od 1 do 10?</p>
+
+    <input type="number" id="mood" min="1" max="10">
+
+    <br>
+
+    <button onclick="checkMood()">Wyślij</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+
+function checkMood(){
+
+    let mood = parseInt(document.getElementById("mood").value);
+    let result = document.getElementById("result");
+
+    if(mood >= 9){
+
+        result.innerHTML =
+        "💖 Cieszę się, że tak się czujesz!<br><br>Pamiętaj, że bardzo Cię kocham i cieszę się, że czujesz się szczęśliwa ❤️";
+
+    }
+
+    else if(mood >= 7){
+
+        result.innerHTML =
+        `
+        <p>💖 Bardzo się cieszę!</p>
+        <p>Czy jest coś, co może uczynić ten dzień jeszcze lepszym?</p>
+
+        <button onclick="tak()">Tak</button>
+        <button onclick="nie()">Nie</button>
+        `;
+    }
+
+    else if(mood >= 1){
+
+        result.innerHTML =
+        "🌸 Dziękuję, że mi powiedziałaś. Chcę wiedzieć, jak się czujesz i jestem przy Tobie ❤️";
+    }
+
+    else{
+        result.innerHTML = "Wpisz liczbę od 1 do 10.";
+    }
+}
+
+function tak(){
+    document.getElementById("result").innerHTML =
+    "✨ Opowiedz mi o tym! Chętnie się dowiem.";
+}
+
+function nie(){
+    document.getElementById("result").innerHTML =
+    "💖 W takim razie życzę Ci cudownego dnia!";
+}
+
+</script>
+
+</body>
+</html>
