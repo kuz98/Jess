@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jess 💖 v9</title>
+<title>Jess 💖 v10</title>
 
 <style>
 body{
@@ -13,7 +13,6 @@ background:linear-gradient(135deg,#ffd6eb,#ffc2e2);
 text-align:center;
 }
 
-/* START + APP */
 #start,#app{
 display:flex;
 flex-direction:column;
@@ -91,7 +90,6 @@ max-width:350px;
 
 <body>
 
-<!-- START -->
 <div id="start">
 <h1>Hej Jess 💖</h1>
 <p>Jak się dziś czujesz (1–10)?</p>
@@ -100,10 +98,8 @@ max-width:350px;
 <button onclick="start()">Dalej</button>
 </div>
 
-<!-- APP -->
 <div id="app" style="display:none;">
 
-<!-- PIXEL GIRL ZAWSZE WIDOCZNA -->
 <div id="girl">
 <div class="face">
 <div class="eye left"></div>
@@ -122,15 +118,16 @@ max-width:350px;
 
 let step = 0;
 
+/* 💖 dokładnie Twój styl */
 const optionsList = [
 "Może zabiorę Cię na obiad?",
 "Masaż?",
-"Film?",
-"Gra?",
+"Może obejrzymy jakiś film?",
+"Może w coś zagramy?",
 "Spacer?",
-"Rozmowa?",
-"Zakupy?",
-"Sprzątanie?"
+"Może posiedzimy i pogadamy?",
+"yyyyy zakupy?",
+"yyyyy sprzątamy?"
 ];
 
 function start(){
@@ -159,7 +156,7 @@ showNextOption();
 }
 }
 
-/* 💖 GIRL REACTION */
+/* 💖 pixel girl reakcje */
 function setEmotion(m){
 let g=document.getElementById("girl");
 
@@ -170,17 +167,15 @@ else if(m>=4) g.classList.add("medium");
 else g.classList.add("sad");
 }
 
-/* TEXT */
 function show(t){
 document.getElementById("mainText").innerHTML=t;
 }
 
-/* OPTIONS RESET */
 function clearOptions(){
 document.getElementById("options").innerHTML="";
 }
 
-/* 🔁 SEKWENCJA OPCJI */
+/* 🔁 SEKWENCJA */
 function showNextOption(){
 
 if(step >= optionsList.length){
@@ -199,19 +194,16 @@ document.getElementById("options").innerHTML=`
 `;
 }
 
-/* TAK */
 function yes(){
 show("💖 Super to chodź do mnie i działajmy !");
 clearOptions();
 }
 
-/* NIE */
 function no(){
 step++;
 showNextOption();
 }
 
-/* CUSTOM */
 function custom(){
 let t=document.getElementById("custom").value;
 show("💖 Rozumiem: "+t);
