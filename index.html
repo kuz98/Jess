@@ -13,12 +13,12 @@ body {
     overflow: hidden;
 }
 
-/* KWIATKI W TLE */
+/* 🌸 kwiatki */
 .flower {
     position: absolute;
-    width: 20px;
-    height: 20px;
-    background: pink;
+    width: 14px;
+    height: 14px;
+    background: #ff9ecf;
     border-radius: 50%;
     opacity: 0.6;
     animation: float 6s infinite ease-in-out;
@@ -26,11 +26,11 @@ body {
 
 @keyframes float {
     0% {transform: translateY(0);}
-    50% {transform: translateY(-20px);}
+    50% {transform: translateY(-25px);}
     100% {transform: translateY(0);}
 }
 
-/* EKRAN STARTOWY */
+/* START SCREEN */
 #start {
     height: 100vh;
     display: flex;
@@ -40,18 +40,38 @@ body {
     text-align: center;
 }
 
-/* PIXEL LUDZIK */
-.pixel {
-    width: 80px;
-    height: 80px;
-    image-rendering: pixelated;
-    margin-bottom: 20px;
+/* 🧍 PIXEL GIRL */
+.pixelGirl {
+    width: 120px;
+    height: 120px;
+    background:
+        linear-gradient(#000,#000) 20px 10px / 80px 20px no-repeat,
+        linear-gradient(#000,#000) 10px 20px / 100px 30px no-repeat,
+        radial-gradient(circle,#f5d7c6 60%,transparent 61%) 35px 35px / 50px 50px no-repeat,
+        linear-gradient(#111,#111) 30px 70px / 60px 25px no-repeat,
+        linear-gradient(#2b2b2b,#2b2b2b) 35px 95px / 50px 25px no-repeat;
+
+    border-radius: 10px;
+    position: relative;
     animation: wave 1s infinite alternate;
 }
 
 @keyframes wave {
-    from { transform: rotate(-10deg); }
-    to { transform: rotate(10deg); }
+    from { transform: rotate(-5deg) translateY(0); }
+    to { transform: rotate(5deg) translateY(-3px); }
+}
+
+.pixelGirl::after {
+    content: "👋";
+    position: absolute;
+    right: -20px;
+    top: 40px;
+    animation: hand 0.6s infinite alternate;
+}
+
+@keyframes hand {
+    from { transform: rotate(-20deg); }
+    to { transform: rotate(20deg); }
 }
 
 h1 {
@@ -68,7 +88,7 @@ button {
     cursor: pointer;
 }
 
-/* GRA */
+/* GAME */
 #game {
     display: none;
     height: 100vh;
@@ -85,24 +105,32 @@ input {
     width: 80px;
     text-align: center;
 }
+
+#result {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #b3005f;
+}
 </style>
 </head>
 
 <body>
 
-<!-- kwiatki -->
-<div class="flower" style="top:10%;left:20%"></div>
-<div class="flower" style="top:30%;left:70%"></div>
-<div class="flower" style="top:60%;left:40%"></div>
+<!-- 🌸 kwiatki -->
+<div class="flower" style="top:10%;left:15%"></div>
+<div class="flower" style="top:25%;left:70%"></div>
+<div class="flower" style="top:60%;left:30%"></div>
+<div class="flower" style="top:80%;left:80%"></div>
 
 <!-- START -->
 <div id="start">
-    <div class="pixel">🧍‍♀️</div>
+    <div class="pixelGirl"></div>
     <h1>Cześć Jess 💖</h1>
+    <p>Twoja rockowa pixelowa ja Cię wita 👋</p>
     <button onclick="startGame()">Zaczynamy</button>
 </div>
 
-<!-- GRA -->
+<!-- GAME -->
 <div id="game">
     <h2>Jak się dziś czujesz (1-10)? 💖</h2>
     <input id="mood" type="number" min="1" max="10">
@@ -124,13 +152,13 @@ function checkMood(){
     let result = document.getElementById("result");
 
     if(mood >= 9){
-        result.innerHTML = "💖 Cieszę się, że tak się czujesz! Kocham Cię i chcę żebyś zawsze była szczęśliwa ❤️";
+        result.innerHTML = "💖 Cieszę się Jess! Jesteś super ważna i chcę żebyś zawsze czuła się dobrze ❤️";
     }
     else if(mood >= 7){
-        result.innerHTML = "💖 Super! Czy jest coś co może uczynić ten dzień jeszcze lepszym?";
+        result.innerHTML = "💖 Fajnie! Co mogłoby dziś zrobić Twój dzień jeszcze lepszym?";
     }
     else if(mood >= 1){
-        result.innerHTML = "🌸 Jestem przy Tobie Jess. Wszystko będzie dobrze ❤️";
+        result.innerHTML = "🌸 Jestem przy Tobie Jess. Nie jesteś sama ❤️";
     }
     else{
         result.innerHTML = "Wpisz liczbę 1–10";
